@@ -1,0 +1,31 @@
+data_engineering:
+  hist_data_download:
+    is_update_data: False
+    path_dir: data/01_raw/
+
+    data_frequencies:
+      - 1h
+
+    tickers:
+      - BTCUSDT
+      - ETHUSDT
+      - BNBUSDT
+
+    date_start: 
+      year: 2017
+      month: 1
+      day: 1
+
+    date_end:
+      year: 2023
+      month: 8
+      day: 1
+
+  cols_to_drop:
+    - volume
+    - taker_buy_volume
+    - taker_buy_quote_volume
+    - ignore
+
+  ext_data_download:
+    tickers: "^GSPC ^DJI ^IXIC CL=F GC=F"

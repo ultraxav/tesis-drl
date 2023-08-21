@@ -1,8 +1,8 @@
 from setuptools import find_packages, setup
 
-entry_point = (
-    "tesis-drl = tesis_drl.__main__:main"
-)
+from tesis_drl import __version__
+
+entry_point = "tesis-drl = tesis_drl.__main__:main"
 
 
 # get the dependencies and installs
@@ -18,7 +18,7 @@ with open("requirements.txt", encoding="utf-8") as f:
 
 setup(
     name="tesis_drl",
-    version="0.1",
+    version=__version__,
     packages=find_packages(exclude=["tests"]),
     entry_points={"console_scripts": [entry_point]},
     install_requires=requires,

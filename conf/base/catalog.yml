@@ -2,3 +2,75 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+
+# Dataset conf anchors
+_partitioned: &partitioned
+  type: PartitionedDataset
+  dataset:
+    type: pandas.CSVDataSet
+    load_args:
+      sep: ','
+      names: 
+        - timestamp_open
+        - open
+        - high
+        - low
+        - close
+        - volume
+        - timestamp_close
+        - quote_volume
+        - count
+        - taker_buy_volume
+        - taker_buy_quote_volume
+        - ignore
+  filename_suffix: '.csv'
+
+# Datasets
+download_flag:
+  layer: Data Download
+  type: MemoryDataSet
+
+ext_data:
+  layer: Data Download
+  type: pandas.ParquetDataSet
+  filepath: data/01_raw/ext_data.parquet
+
+btc_1h_raw:
+  layer: Data Download
+  <<: *partitioned
+  path: data/01_raw/spot/monthly/klines/BTCUSDT/1h
+
+eth_1h_raw:
+  layer: Data Download
+  <<: *partitioned
+  path: data/01_raw/spot/monthly/klines/ETHUSDT/1h
+
+bnb_1h_raw:
+  layer: Data Download
+  <<: *partitioned
+  path: data/01_raw/spot/monthly/klines/BNBUSDT/1h
+
+btc_1h_clean:
+  layer: Data Engineering
+  type: pandas.ParquetDataSet
+  filepath: data/02_intermediate/btc_1h_clean.parquet
+
+eth_1h_clean:
+  layer: Data Engineering
+  type: pandas.ParquetDataSet
+  filepath: data/02_intermediate/eth_1h_clean.parquet
+
+bnb_1h_clean:
+  layer: Data Engineering
+  type: pandas.ParquetDataSet
+  filepath: data/02_intermediate/bnb_1h_clean.parquet
+
+token_1h_data:
+  layer: Data Engineering
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/token_1h_data.parquet
+
+token_1h_data_with_ext:
+  layer: Data Engineering
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/token_1h_data_with_ext.parquet
